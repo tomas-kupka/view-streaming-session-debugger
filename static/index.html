@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Session debugging tool</title>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="./css/view_session.css">
+    <link rel="stylesheet" type="text/css" href="./css/table_style.css">
+    <script src="./lib/jquery-1.10.2.min.js"></script>
+    <script src="./lib/jquery-migrate-1.2.1.min.js"></script>
+    <script src="./lib/highcharts/js/highcharts.js"></script>
+    <script src="./lib/highcharts/js/modules/exporting.js"></script>
+    <script src="./lib/highcharts/js/themes/dark-blue.js"></script>
+
+    <script src="./js/graph.js"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        // everything starts with user entering their user id and pressing enter
+        $('#userid').keyup(function(e) {
+          if (e.which == 13) {
+            getSessions('#sessionList', $('#userid').val());
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="userid_container">
+      Input a user id in the box below and hit enter. You get a list of
+      video sessions for this user. Click on one of the video sessions and
+      wait a bit. After some time a session graph should appear. You can
+      zoom into the graph be dragging the mouse horizontaly in the graph. You
+      can selectively turn on and off events be clicking on them in the legend.
+      <br/>
+      Note: this is a prototype - send any questions to tomas@comoyo.com
+      <br/>
+      User id:
+      <input type="text" id="userid" size="40" maxlength="19"/>
+    </div>
+
+    <div id="sessionList_container">
+      <table id="sessionList" cellspacing="0" border="1">
+        <thead>
+          <tr>
+            <td>video_session_id</td>
+            <td>content_id</td>
+            <td>date</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="sessionGraph_container">
+      <div id="sessionGraph"><div>
+    </div>
+
+    <div id="sessionEvents_container">
+      <table id="sessionEvents">
+      </table>
+    </div>
+
+  </body>
+</html>
