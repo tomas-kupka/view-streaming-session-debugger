@@ -3,6 +3,50 @@ var static = require('node-static');
 var http = require('http');
 var pg = require('pg');
 
+function createCDF(result, column) {
+  var cdf = [];
+  var c = 0;
+  var last = 0;
+  for (var i = 0; i < result.rows.length; i++) {
+    c++;
+    var n = parseFloat(result.rows[i][column]);
+    if (last == n) {
+      continue;
+    }
+    var e = new Object();
+    e.x = last;
+    e.y = c / result.rows.length;
+    cdf.push(e);
+    last = n;
+  }
+  return cdf;
+}
+
+function getDbCDF(response, query) {
+  var client = new pg.Client(conString);
+
+  client.connect(function(err) {
+    if (err) {
+      return console.error('Could not connect to postgres', err);
+    }
+
+    client.query(query, function (err, result) {
+      if (err) {
+        return console.error('Error running query', err);
+      }
+
+      console.log(result.rows.length);
+
+      var cdf = createCDF(result, 'cdf');
+
+      var json = JSON.stringify(cdf);
+      response.write(json);
+      response.end();
+      client.end();
+    });
+  });
+}
+
 function getSessions(response, userid) {
   var client = new pg.Client(conString);
 
@@ -68,7 +112,6 @@ if (process.argv.length != 7) {
   return 1;
 }
 
-
 var dbHost = process.argv[2];
 var dbUser = process.argv[3];
 var dbPwd = process.argv[4];
@@ -86,6 +129,9 @@ var server = http.createServer(function (request, response) {
 
   if (pathname == '/getSessions') {
     getSessions(response, url_parts.query.userid);
+  } else if (pathname == '/getCDF') {
+    console.log(url_parts.query['q']);
+    getDbCDF(response, url_parts.query['q']);
   } else if (pathname.substr(0,4) == '/get') {
     getEvents(response, pathname.substr(4), url_parts.query.video_session_id);
   } else {

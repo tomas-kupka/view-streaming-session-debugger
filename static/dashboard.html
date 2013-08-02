@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Session debugging tool</title>
+
+    <link rel="stylesheet" type="text/css" href="./css/view_session.css">
+    <link rel="stylesheet" type="text/css" href="./css/table_style.css">
+    <script src="./lib/jquery-1.10.2.min.js"></script>
+    <script src="./lib/jquery-migrate-1.2.1.min.js"></script>
+    <script src="./lib/highcharts/js/highcharts.js"></script>
+    <script src="./lib/highcharts/js/modules/exporting.js"></script>
+    <script src="./lib/highcharts/js/themes/dark-blue.js"></script>
+
+    <script src="./js/dashboard.js"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        for (var i = 0; i < graphs.length; i++) {
+          var div = '<div id=' + i + '>';
+          $('#graphs').append(div);
+          plotCDF(graphs[i], '#' + i);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="graphs"></div>
+  </body>
+</html>
