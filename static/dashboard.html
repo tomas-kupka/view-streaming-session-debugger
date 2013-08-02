@@ -17,7 +17,7 @@
     <script type="text/javascript">
       $(function() {
         for (var i = 0; i < graphs.length; i++) {
-          var div = '<div id=' + i + '>';
+          var div = '<div class="dashboardGraph" id=' + i + '>';
           $('#graphs').append(div);
           plotCDF(graphs[i], '#' + i);
         }

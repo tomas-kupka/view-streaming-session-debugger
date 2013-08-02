@@ -29,3 +29,7 @@
   width: 1400px;
   height: 400px;
 }
+
+.dashboardGraph {
+  float: left;
+}
