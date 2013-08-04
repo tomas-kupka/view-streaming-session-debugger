@@ -127,8 +127,8 @@ function plotCDF(graph, div) {
 
   $(div).highcharts({
     chart: {
-      height: 500,
-      width: 1000,
+      height: 380,
+      width: 680,
       zoomType: 'x'
     },
     title: {
@@ -203,8 +203,8 @@ function plotCDF2(graph1, graph2, div) {
 
   $(div).highcharts({
     chart: {
-      height: 500,
-      width: 1000,
+      height: 380,
+      width: 680,
       zoomType: 'x'
     },
     title: {
