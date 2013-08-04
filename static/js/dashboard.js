@@ -51,6 +51,20 @@ var graphs = [
                 '  and ts >= FROM and ts <= TO' +
                 ' order by cdf'
                ),
+  new CDFGraph('PRE-Buffer events shorter than x seconds',
+               'Duration [s]',
+               -1,
+               'logarithmic',
+               'CDF',
+               1.2,
+               'normal',
+               '({point.y} * 100) % of events shorter than {point.x} seconds',
+               'select duration as cdf from sl_pre_buffer_time' +
+                ' where viewer like \'%%ilver%%\'' +
+                '  and duration is not null' +
+                '  and ts >= FROM and ts <= TO' +
+                ' order by cdf'
+               ),
   new CDFGraph('When does buffering occure from the start of the content (Silverlight)',
               'Occurance time [s]',
               -1,
