@@ -125,6 +125,8 @@ function createGraph(eventGraph, session) {
   console.log("seek: " + playback_bitrate);
   insertStopPlaybackEvent(session.error, session.bitrate, playback_bitrate);
   console.log("error: " + playback_bitrate);
+  insertStopPlaybackEvent(session.warning, session.bitrate, playback_bitrate);
+  console.log("warning: " + playback_bitrate);
   // 4.
   insertStartPlaybackEvent(session.play, session.bitrate, playback_bitrate);
   console.log("play: " + playback_bitrate);
@@ -293,6 +295,24 @@ function createGraph(eventGraph, session) {
         pointFormat: '{point.x} playback: {point.playback_position}'
       },
       pointWidth: 1
+    },{
+      type: 'column',
+      name: 'Warning',
+      data: createEventGraphPoints(session.warning),
+      tooltip: {
+        headerFormat: 'warning: ',
+        pointFormat: '{point.x} playback: {point.playback_position}'
+      },
+      pointWidth: 1
+    },{
+      type: 'column',
+      name: 'Error',
+      data: createEventGraphPoints(session.error),
+      tooltip: {
+        headerFormat: 'error: ',
+        pointFormat: '{point.x} playback: {point.playback_position}'
+      },
+      pointWidth: 1
     }]
   });
 }
@@ -324,6 +344,7 @@ function visualizeEvents(eventTable, eventGraph, video_session_id) {
   session.summary = appTs2Int(getEvents('/getsl_summary', video_session_id));
   session.stop = appTs2Int(getEvents('/getsl_stop', video_session_id));
   session.error = appTs2Int(getEvents('/getsl_error', video_session_id));
+  session.warning = appTs2Int(getEvents('/getsl_warning', video_session_id));
   session.play = appTs2Int(getEvents('/getsl_play', video_session_id));
 
   console.log("session.play: " + createEventGraphPoints(session.play));
