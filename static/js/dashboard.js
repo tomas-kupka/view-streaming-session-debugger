@@ -21,7 +21,7 @@ function copyGraph(graph) {
 
 var graphs = [
 
-  new CDFGraph('Sessions (%) with less than x buffering events',
+  new CDFGraph('Sessions with less than x buffering events',
                'Number of events',
                -1,
                'logarithmic',
@@ -93,6 +93,38 @@ var graphs = [
                 '  and ts >= FROM and ts <= TO' +
                 ' order by cdf'
               ),
+  new CDFGraph('Sessions with less than x errors',
+               'Number of errors',
+               -1,
+               'logarithmic',
+               'CDF',
+               1.2,
+               'normal',
+              '({point.y} * 100) % of sessions had less than {point.x} errors',
+              'select count(b.ts) as cdf from sl_sessions as s, sl_error as b' +
+                ' where b.video_session_id = s.video_session_id' +
+                '  and b.ts >= FROM and b.ts <= TO' +
+                '  and s.ts >= FROM and s.ts <= TO' +
+                ' group by s.video_session_id' +
+                ' order by cdf'
+              )
+  ,
+  new CDFGraph('Sessions with less than x warnings',
+               'Number of warnings',
+               -1,
+               'logarithmic',
+               'CDF',
+               1.2,
+               'normal',
+              '({point.y} * 100) % of sessions had less than {point.x} warnings',
+              'select count(b.ts) as cdf from sl_sessions as s, sl_warning as b' +
+                ' where b.video_session_id = s.video_session_id' +
+                '  and b.ts >= FROM and b.ts <= TO' +
+                '  and s.ts >= FROM and s.ts <= TO' +
+                ' group by s.video_session_id' +
+                ' order by cdf'
+              )
+  ,
   new CDFGraph('Sessions with less than x kbps of bandwidth available',
               'Available bandwidth [kbps]',
               -1,
