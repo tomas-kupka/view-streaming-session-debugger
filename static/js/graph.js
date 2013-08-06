@@ -1,7 +1,7 @@
 function getSessions(sessions_table, user_id) {
   $.ajax({
     url: './getSessions',
-    data: "userid=" + user_id,
+    data: "u=" + user_id,
     success: function(data) {
       var sessions = JSON.parse(data);
       // clear the sessions table

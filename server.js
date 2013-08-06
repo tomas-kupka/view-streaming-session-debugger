@@ -128,7 +128,7 @@ var server = http.createServer(function (request, response) {
   var pathname = url_parts.pathname;
 
   if (pathname == '/getSessions') {
-    getSessions(response, url_parts.query.userid);
+    getSessions(response, url_parts.query.u);
   } else if (pathname == '/getCDF') {
     console.log(url_parts.query['q']);
     getDbCDF(response, url_parts.query['q']);
